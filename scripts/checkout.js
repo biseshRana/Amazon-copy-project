@@ -20,7 +20,7 @@ cart.forEach((cartItem) => //loops through all the objects in your cart, the par
     //we then generate the HTML of the checkout left tab so that it will run custom to each new matchingProduct 
     cartSummaryHTML += //all of the HTML of all matchingPrdoucts is put within cartSummaryHTML
     `
-        <div class="cart-item-container">
+        <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
         <div class="delivery-date">
         Delivery date: Tuesday, June 21
         </div>
@@ -104,5 +104,8 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((link) =>
     {
        const productId = link.dataset.productId; //above in the HTML string, we set the delete button an attribute of the ID. 
        removeFromCart(productId); 
+
+       const container = document.querySelector(`.js-cart-item-container-${productId}`) //in the HTML the div of all the HTML is given a class with the product ID. So every product in cart has its own unique head div. By putting the document.querySelector within the delete button eventListener, we only pull the head divs of the product in cart we wanna delete. 
+       container.remove();
     });
 });
