@@ -1,5 +1,5 @@
-import {cart} from '../data/cart.js';
-import {products} from '../data/products.js' 
+import {cart, addToCart} from '../data/cart.js';
+import {products} from '../data/products.js'  
 
 let productsHTML = '';
 products.forEach((product) => 
@@ -60,40 +60,28 @@ products.forEach((product) =>
 
 document.querySelector('.products-grid').innerHTML = productsHTML;
 
-document.querySelectorAll('.js-add-to-cart').forEach((button) => 
+
+function updateCartQuantity()
 {
+    // cart is the array. The array holds objects that hold productName and quantity. Item is a paramter that represents the object variabe. So essentially the for loop is looping the array of objects, and passing each object through item. productName represents the name of the amazon you clicked add to cart on. The for loop just checks if its already in the array (called cart). If it does matchingItem is going to equal the object and its quantity will be increased (matchingItem will equal a new product everytime add to cart is pressed on a different product but item should do the same thing so idk why they made matchingItem). If not the new object will be pushed into the array.  
+        
+
+    let cartQuantity = 0;
+    cart.forEach((cartItem) => 
+    {
+        cartQuantity += cartItem.quantity;
+    });
+    document.querySelector('.cart-quantity').innerHTML = cartQuantity;
+}
+document.querySelectorAll('.js-add-to-cart')
+.forEach((button) => {
     button.addEventListener('click', () => 
     {
+        
         const productId = button.dataset.productId;
-
-        let matchingItem;
-        // cart is the array. The array holds objects that hold productName and quantity. Item is a paramter that represents the object variabe. So essentially the for loop is looping the array of objects, and passing each object through item. productName represents the name of the amazon you clicked add to cart on. The for loop just checks if its already in the array (called cart). If it does matchingItem is going to equal the object and its quantity will be increased (matchingItem will equal a new product everytime add to cart is pressed on a different product but item should do the same thing so idk why they made matchingItem). If not the new object will be pushed into the array.  
-        cart.forEach((item) => 
-        {
-            if (productId === item.productId)
-            {
-                matchingItem = item;
-            }
-        });
-        if (matchingItem)
-            {
-                matchingItem.quantity += 1;
-            } 
-         else 
-            {
-                cart.push(
-                    {
-                        productId: productId,
-                        quantity: 1
-                    });
-            }
-
-            let cartQuantity = 0;
-            cart.forEach((item) => 
-            {
-                cartQuantity += item.quantity;
-            });
-            document.querySelector('.cart-quantity').innerHTML = cartQuantity;
+        addToCart(productId);
+        updateCartQuantity();
+        
     });
 });
 
