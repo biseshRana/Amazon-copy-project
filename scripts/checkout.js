@@ -1,8 +1,7 @@
 //we start by taking in the information from the cart and all the products available
-import {cart} from '../data/cart.js';
+import {cart, removeFromCart} from '../data/cart.js';
 import {products} from '../data/products.js';
-import { formatCurrency } from './utils/money.js';
-
+import {formatCurrency} from './utils/money.js';
 let cartSummaryHTML = ''; //variable that will hold all the HTML of the checkout left tab
 
 cart.forEach((cartItem) => //loops through all the objects in your cart, the paramater represents an object
@@ -44,7 +43,7 @@ cart.forEach((cartItem) => //loops through all the objects in your cart, the par
             <span class="update-quantity-link link-primary">
                 Update
             </span>
-            <span class="delete-quantity-link link-primary">
+            <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id="${matchingProduct.id}">
                 Delete
             </span>
             </div>
@@ -97,6 +96,13 @@ cart.forEach((cartItem) => //loops through all the objects in your cart, the par
         </div>
     </div>
     `;
-
+});
     document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML; //the collective html is then put within the div that contained the socks and basketball so now it will collecct all matchingProducts rather than just those two. 
+document.querySelectorAll('.js-delete-quantity-link').forEach((link) => 
+{
+    link.addEventListener('click', () => 
+    {
+       const productId = link.dataset.productId; //above in the HTML string, we set the delete button an attribute of the ID. 
+       removeFromCart(productId); 
+    });
 });
