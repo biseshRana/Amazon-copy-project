@@ -1,23 +1,25 @@
+//we start by taking in the information from the cart and all the products available
 import {cart} from '../data/cart.js';
 import {products} from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
 
-let cartSummaryHTML = '';
+let cartSummaryHTML = ''; //variable that will hold all the HTML of the checkout left tab
 
-cart.forEach((cartItem) => 
+cart.forEach((cartItem) => //loops through all the objects in your cart, the paramater represents an object
 {
     const productId = cartItem.productId;
 
     let matchingProduct;
 
-    products.forEach((product) => 
+    products.forEach((product) => //loops through all the products. If the object ID matches the product ID then variable matchingProduct will be set equal to the entire product object.
     {
         if (product.id === productId)
         {
             matchingProduct = product;
         }
     }); 
-    
-    cartSummaryHTML +=
+    //we then generate the HTML of the checkout left tab so that it will run custom to each new matchingProduct 
+    cartSummaryHTML += //all of the HTML of all matchingPrdoucts is put within cartSummaryHTML
     `
         <div class="cart-item-container">
         <div class="delivery-date">
@@ -33,7 +35,7 @@ cart.forEach((cartItem) =>
             ${matchingProduct.name}
             </div>
             <div class="product-price">
-            $${matchingProduct.priceCents / 100}
+            $${formatCurrency(matchingProduct.priceCents / 100)}
             </div>
             <div class="product-quantity">
             <span>
@@ -55,7 +57,7 @@ cart.forEach((cartItem) =>
             <div class="delivery-option">
             <input type="radio" checked
                 class="delivery-option-input"
-                name="delivery-option-1">
+                name="delivery-option-${matchingProduct.id}">
             <div>
                 <div class="delivery-option-date">
                 Tuesday, June 21
@@ -68,7 +70,7 @@ cart.forEach((cartItem) =>
             <div class="delivery-option">
             <input type="radio"
                 class="delivery-option-input"
-                name="delivery-option-1">
+                name="delivery-option-${matchingProduct.id}">
             <div>
                 <div class="delivery-option-date">
                 Wednesday, June 15
@@ -81,7 +83,7 @@ cart.forEach((cartItem) =>
             <div class="delivery-option">
             <input type="radio"
                 class="delivery-option-input"
-                name="delivery-option-1">
+                name="delivery-option-${matchingProduct.id}">
             <div>
                 <div class="delivery-option-date">
                 Monday, June 13
@@ -96,5 +98,5 @@ cart.forEach((cartItem) =>
     </div>
     `;
 
-    document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
+    document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML; //the collective html is then put within the div that contained the socks and basketball so now it will collecct all matchingProducts rather than just those two. 
 });
