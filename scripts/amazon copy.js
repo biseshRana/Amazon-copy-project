@@ -1,5 +1,3 @@
-import {cart} from '../data/cart.js';
-
 let productsHTML = '';
 products.forEach((product) => 
 {
@@ -28,7 +26,7 @@ products.forEach((product) =>
         </div>
 
         <div class="product-quantity-container">
-        <select>
+        <select class="selectt-${product.Id}">
             <option selected value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -44,11 +42,10 @@ products.forEach((product) =>
 
         <div class="product-spacer"></div>
 
-        <div class="added-to-cart">
+        <div class="added-to-cart js-added-to-cart bruh">
         <img src="images/icons/checkmark.png">
         Added
         </div>
-
         <button class="add-to-cart-button button-primary js-add-to-cart"
         data-product-id="${product.id}">
         Add to Cart
@@ -74,16 +71,22 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) =>
                 matchingItem = item;
             }
         });
+
+        const quantitySelector = document.querySelector('.selectt-${productId}');
+
+        const quantity = Number(quantitySelector.value);
         if (matchingItem)
             {
                 matchingItem.quantity += 1;
+                matchingItem += quantity;
             } 
          else 
             {
                 cart.push(
                     {
                         productId: productId,
-                        quantity: 1
+                        quantity: 1,
+                        quantity: quantity
                     });
             }
 
@@ -93,6 +96,7 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) =>
                 cartQuantity += item.quantity;
             });
             document.querySelector('.cart-quantity').innerHTML = cartQuantity;
+            doument
     });
 });
 
