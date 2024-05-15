@@ -1,10 +1,10 @@
-import {cart, addToCart} from '../data/cart.js';
+import {cart, addToCart  } from '../data/cart.js';
 import {products} from '../data/products.js'  
 
 let productsHTML = '';
 products.forEach((product) => 
 {
-    productsHTML += 
+    productsHTML += //13) HTML generation: this HTML creates one item on the amazon webpage. Product is the array that is being looped through for each object (has all item info) info to put into their respective place within this HTML. All the HTML is being stacked on productsHTML which will represent all the items on the webpage
     `     
         <div class="product-container">
         <div class="product-image-container">
@@ -82,6 +82,7 @@ document.querySelectorAll('.js-add-to-cart')
         addToCart(productId);
         updateCartQuantity();
         
+//you cant just pull the object info by clicking on the items button. This is because there is no way to distinguish a button from item1 from item2. IOW, we can't link the buttons to an object. However, as we are looping thru the buttons, say we are on item 2 button. Still no link between button and item2 object info. However through the data attribute, we can link a product ID with the button and retrieve the product ID which we can push to the cart array. 
     });
 });
-
+//once again just using querySelectorAll isnt enough to target all the buttons with addEventListeners. YOu have to use a for loop. 
