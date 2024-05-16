@@ -1,5 +1,5 @@
 //14. All of this is lesson 14. we start by taking in the information from the cart and all the products available
-import {cart, removeFromCart} from '../data/cart.js';
+import {cart, removeFromCart, updateDeliveryOption} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
@@ -99,7 +99,9 @@ function deliveryOptionsHTML(matchingProduct, cartItem)//matching product has to
 const isChecked = deliveryOption.id === cartItem.deliveryOptionId; //15-3) deliveryOption is an objectin the deliveryOptions array. cartItem is a object in the cart array. We have to check if the cartItem delivery option (what the user chooses) mathces the deliveryOption (id)       
 
 html += //combines all the delivery options
-            `<div class="delivery-option">
+            `<div class="delivery-option"
+            data-product-id="${matchingProduct.id}"
+            data-delivery-option-id="${deliveryOption.id}">
             <input type="radio"
                 ${isChecked ? 'checked' : ''} 
                 class="delivery-option-input"
@@ -129,3 +131,14 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((link) =>
        container.remove();
     });
 });
+
+document.querySelectorAll('.delivery-option').forEach((element) => //15-7) element represents a deliveryOption
+    {
+        element.addEventListener('click', () => 
+            {
+                const {productId, deliveryOptionId} = element.dataset;
+                //same thing as const productId= element.dataset.productId; 
+                //const deliveryOptionId = element.dataset.deliveryOptionId;
+                updateDeliveryOption(productId, deliveryOptionId);
+            });
+    });

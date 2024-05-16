@@ -1,6 +1,6 @@
 export let cart = JSON.parse(localStorage.getItem('cart'));
 
-if (!cart) {
+if (!cart) {//if this left part wasn't here then cart would be only these two products.
   cart = [{
     productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
     quantity: 2,
@@ -49,6 +49,21 @@ export function removeFromCart(productId) {
   });
 
   cart = newCart;
+
+  saveToStorage();
+}
+
+export function updateDeliveryOption(productId, deliveryOptionId)//both parameters were not declared within updateDeliveryOption
+{
+  let matchingItem;
+
+  cart.forEach((cartItem) => {//this entire function just ensures the product you clicked the button on matches with the product in the cart. 
+    if (productId === cartItem.productId) {
+      matchingItem = cartItem;
+    }
+  });
+
+  matchingItem.deliveryOptionId = deliveryOptionId; //sets optionId of cartItem to new option you clicked
 
   saveToStorage();
 }
