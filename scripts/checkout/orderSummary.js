@@ -5,11 +5,9 @@ import {formatCurrency} from '../utils/money.js';
 import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
+import { renderPaymentSummary } from './paymentSummary.js';
 
-
-hello();
-
-export function renderOrderSummary()
+export function renderOrderSummary()//generates all the data and HTML for the left side
 {
 
     let cartSummaryHTML = ''; //variable that will hold all the HTML of the checkout left tab
@@ -134,6 +132,8 @@ export function renderOrderSummary()
 
         const container = document.querySelector(`.js-cart-item-container-${productId}`) //in the HTML the div of all the HTML is given a class with the product ID. So every product in cart has its own unique head div. By putting the document.querySelector within the delete button eventListener, we only pull the head divs of the product in cart we wanna delete. 
         container.remove();
+
+        renderPaymentSummary();
         });
     });
 
@@ -146,6 +146,7 @@ export function renderOrderSummary()
                     //const deliveryOptionId = element.dataset.deliveryOptionId;
                     updateDeliveryOption(productId, deliveryOptionId);
                     renderOrderSummary();//15-8) regenerates the entire HTML so it will change automatically. That's why the date only changed once you hit refresh before, its because the deliveryOptionID updated but the HTML didn't. 
+                    renderPaymentSummary();
                 });
         });
 }
