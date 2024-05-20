@@ -1,3 +1,19 @@
+export function getProduct(productId)//15-9)gives us full product details
+{
+  let matchingProduct;
+
+        products.forEach((product) =>  
+        {
+            if (product.id === productId) 
+            {
+                matchingProduct = product;
+            }
+        }); 
+     return matchingProduct; 
+}
+
+
+
 export const products = [//13) all of this is part of lesson 13. This part is saving the data, where we pulled info from the HTML and put it into an object in the JS array.
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",

@@ -1,13 +1,13 @@
 //14. All of this is lesson 14. we start by taking in the information from the cart and all the products available
 import {cart, removeFromCart, updateDeliveryOption} from '../../data/cart.js';
-import {products} from '../../data/products.js';
+import {products, getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import {deliveryOptions} from '../../data/deliveryOptions.js';
+import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
+
+
 hello();
-
-
 
 export function renderOrderSummary()
 {
@@ -18,27 +18,27 @@ export function renderOrderSummary()
     {
         const productId = cartItem.productId;
 
-        let matchingProduct;
+        const matchingProduct = getProduct(productId);//15-10)everything below is this function explained
 
-        products.forEach((product) => //loops through all the products. If the object ID matches the product ID then variable matchingProduct will be set equal to the entire product object. This is done to get the remaining info such as name, rating, price, etc. that is not available within the cart objects. 
+        /*products.forEach((product) => //loops through the products array. If the object ID matches the cart productID then variable matchingProduct will be set equal to the entire product object. This is done to get the remaining info such as name, rating, price, etc. that is not available within the cart objects. 
         {
             if (product.id === productId) //the reason this is product.id and not parameter.dataset.productId is because this for loop is looping through the product object which holds an ID variable. 
             {
                 matchingProduct = product;
             }
-        }); 
+        });*/ 
 
         const deliveryOptionId = cartItem.deliveryOptionId; 
         //15-4) cart item has one deliveryOption selected represented by an ID. This deliveryOptionId reps that.
-        let deliveryOption;
+        const deliveryOption = getDeliveryOption(deliveryOptionId);//15-11) comment below is explanation of this functions
 
-        deliveryOptions.forEach((option) => { //15-5)cycles through each delivery option, given differnet name for parameter cause of let variable above. 
+        /*deliveryOptions.forEach((option) => { //15-5)cycles through each delivery option, given differnet name for parameter cause of let variable above. 
             if(option.id === deliveryOptionId)//15-6) essetially if cart array option id equals the one delivery array option has, then variable deliveryOption will equal the delivery array option. 
                 {
                     deliveryOption = option;
                 }
         
-        });
+        });*/
         //15-7) this entire block of code is the formatting for the green delivery date. Idk why its messedup.
         const today = dayjs();
         const deliveryDate = today.add(deliveryOption.deliveryDays,'days'); 
