@@ -1,4 +1,4 @@
-import {formatCurry} from '../scripts/utils/money';
+import {formatCurry} from '../../scripts/utils/money';
 
 describe('test suite: formatCurry', () => {
   it('converts cents into dollars', () => {
