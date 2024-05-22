@@ -60,7 +60,7 @@ export function renderOrderSummary()//generates all the data and HTML for the le
                 <div class="product-price">
                 $${formatCurrency(matchingProduct.priceCents / 100)}
                 </div>
-                <div class="product-quantity">
+                <div class="product-quantity js-product-quantity-${matchingProduct.id}">
                 <span>
                     Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${cartItem.quantity}</span>
                 </span>
@@ -73,7 +73,7 @@ export function renderOrderSummary()//generates all the data and HTML for the le
                     data-product-id="${matchingProduct.id}">
                     Save
                 </span>
-                <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id="${matchingProduct.id}">
+                <span class="delete-quantity-link link-primary js-delete-quantity-link js-delete-link-${matchingProduct.id}" data-product-id="${matchingProduct.id}">
                     Delete
                 </span>
                 </div>
