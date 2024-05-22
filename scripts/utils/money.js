@@ -4,3 +4,9 @@ export function formatCurrency(priceCents)
 }
 
 export default formatCurrency;
+
+export function formatCurry(priceCents)
+{
+   return (Math.round(priceCents) / 100).toFixed(2);
+}
+

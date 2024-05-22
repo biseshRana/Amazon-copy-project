@@ -4,8 +4,9 @@ import {products, getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
+import {deliveryOptions, getDeliveryOption, calculateDeliveryDate} from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from '../../zpractice.js';
 
 export function renderOrderSummary()//generates all the data and HTML for the left side
 {
@@ -37,10 +38,8 @@ export function renderOrderSummary()//generates all the data and HTML for the le
                 }
         
         });*/
-        //15-7) this entire block of code is the formatting for the green delivery date. Idk why its messedup.
-        const today = dayjs();
-        const deliveryDate = today.add(deliveryOption.deliveryDays,'days'); 
-        const dateString =deliveryDate.format('dddd, MMMM D');
+        //15-7) this entire block of code is the formatting for the green delivery date. You can straight up plug the function in, instead of dateString, same output. 
+        const dateString = calculateDeliveryDate(deliveryOption);
 
         //we then generate the HTML of the checkout left tab so that it will run custom to each new matchingProduct 
         cartSummaryHTML += //all of the HTML of all matchingProducts is put within cartSummaryHTML
@@ -92,10 +91,16 @@ export function renderOrderSummary()//generates all the data and HTML for the le
         //delivery option parameter represents one object in array deliveryOptions (this thing is one of the three circles)
         deliveryOptions.forEach((deliveryOption) => 
             {
-                const today = dayjs();//gets todays date
-                const deliveryDate = today.add(deliveryOption.deliveryDays,'days'); //add on the number of days for the given deliveryOption
-                const dateString =deliveryDate.format('dddd, MMMM D');
-                //formats it
+                const dateString = calculateDeliveryDate(deliveryOption);
+                /*  How function works:
+                    const today = dayjs(); 
+                    //returns todays date
+                    const deliveryDate = today.add(deliveryOption.deliveryDays,'days');
+                    //add on the number of days for the given deliveryOption 
+                    const dateString =deliveryDate.format('dddd, MMMM D');
+                    //formats the date
+                */
+                
                 const priceString = deliveryOption.priceCents === 0
     /*runs if true*/ ? 'FREE'
     /*run if false */:   `$${formatCurrency(deliveryOption.priceCents)/100}`;
@@ -134,6 +139,7 @@ export function renderOrderSummary()//generates all the data and HTML for the le
         container.remove();
 
         renderPaymentSummary();
+        renderCheckoutHeader();
         });
     });
 
