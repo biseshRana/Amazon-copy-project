@@ -1,18 +1,18 @@
 class Cart
 {//all of this is lesson 17
     cartItems; //so it has to follow the same rules as this
-    localStorageKey;//became instance of an object here
+    #localStorageKey;//became instance of an object here
     
     constructor(localStorageKey)
     {
-        this.localStorageKey = localStorageKey;
+        this.#localStorageKey = localStorageKey;
         this.loadFromStorage();
         //17-1) You use this because the object your run will not be called cart all the time (it was called cart before we replaced it with this)
     }
 
-    loadFromStorage() //classes only take this format apparently
+    #loadFromStorage() //classes only take this format apparently
         {
-        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+        this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
         //this refrences cart. To call a thing within an object it has to be cart.thingName or this.thingName. Now you have to use this in front of it because its an instance of an object. 
 
         if (!this.cartItems) {//if this left part wasn't here then cart would be only these two products.
@@ -30,7 +30,7 @@ class Cart
 
         saveToStorage()
         {
-            localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+            localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
         }
 
         addToCart(productId) {
