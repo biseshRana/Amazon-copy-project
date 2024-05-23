@@ -58,7 +58,7 @@ export function renderOrderSummary()//generates all the data and HTML for the le
                 ${matchingProduct.name}
                 </div>
                 <div class="product-price">
-                $${formatCurrency(matchingProduct.priceCents / 100)}
+                ${matchingProduct.getPrice()}
                 </div>
                 <div class="product-quantity js-product-quantity-${matchingProduct.id}">
                 <span>

@@ -6,7 +6,7 @@ class Cart
     constructor(localStorageKey)
     {
         this.#localStorageKey = localStorageKey;
-        this.loadFromStorage();
+        this.#loadFromStorage();
         //17-1) You use this because the object your run will not be called cart all the time (it was called cart before we replaced it with this)
     }
 
@@ -111,3 +111,4 @@ const businessCart = new Cart('cart-business');//runs constructor as well as cla
 
 console.log(cart);
 console.log(businessCart);
+console.log(businessCart instanceof Cart);
