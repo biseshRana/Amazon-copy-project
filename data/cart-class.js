@@ -1,13 +1,20 @@
-function Cart(localStorageKey)
+class Cart
 {//all of this is lesson 17
-    const cart = 
+    cartItems; //so it has to follow the same rules as this
+    localStorageKey;//became instance of an object here
+    
+    constructor(localStorageKey)
     {
-        cartItems: undefined,
+        this.localStorageKey = localStorageKey;
+        this.loadFromStorage();
+        //17-1) You use this because the object your run will not be called cart all the time (it was called cart before we replaced it with this)
+    }
 
-        loadFromStorage: function()
+    loadFromStorage() //classes only take this format apparently
         {
-        this.cartItems = JSON.parse(localStorage.getItem(localStorageKey));
-        //this refrences cart. To call a thing within an object it has to be cart.thingName or this.thingName.  
+        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+        //this refrences cart. To call a thing within an object it has to be cart.thingName or this.thingName. Now you have to use this in front of it because its an instance of an object. 
+
         if (!this.cartItems) {//if this left part wasn't here then cart would be only these two products.
             this.cartItems = [{
             productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
@@ -19,14 +26,14 @@ function Cart(localStorageKey)
             deliveryOptionId: '2'
             }];
         }
-        },
+        }
 
-        saveToStorage: function()
+        saveToStorage()
         {
-            localStorage.setItem(localStorageKey, JSON.stringify(this.cartItems));
-        },
+            localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+        }
 
-        addToCart: function(productId) {
+        addToCart(productId) {
             let matchingItem;
         
             this.cartItems.forEach((cartItem) => {
@@ -46,7 +53,7 @@ function Cart(localStorageKey)
             }
         
             this.saveToStorage();
-        },
+        }
 
         removeFromCart(productId) {//same syntax as removeFromCart = function(productId)...
             const newCart = [];
@@ -61,7 +68,7 @@ function Cart(localStorageKey)
             this.cartItems = newCart;
         
             this.saveToStorage();
-        },
+        }
 
         updateDeliveryOption(productId, deliveryOptionId)//both parameters were not declared within updateDeliveryOption
             {
@@ -76,7 +83,7 @@ function Cart(localStorageKey)
             matchingItem.deliveryOptionId = deliveryOptionId; //sets optionId of cartItem to new option you clicked
 
             this.saveToStorage();
-            },
+            }
 
             updateQuantity(productId, newQuantity) 
             {
@@ -92,16 +99,15 @@ function Cart(localStorageKey)
 
             this.saveToStorage();
             }
-    };
 
-    return cart;
 }
 
-const cart = Cart('cart-bruh');
-const businessCart = Cart('cart-fam');
 
-cart.loadFromStorage();
-businessCart.loadFromStorage();
+
+const cart = new Cart('cart-oop');//this is called an instance
+const businessCart = new Cart('cart-business');//runs constructor as well as class 
+
+
 
 console.log(cart);
 console.log(businessCart);
