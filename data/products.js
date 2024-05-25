@@ -41,7 +41,7 @@ class Product {
 }
 
 class Clothing extends Product {
-  sizeChartLink;
+  sizeChartLink; //same thing as const sizeChartLink = undefined;
 
   constructor(productDetails) {
     super(productDetails);
@@ -88,6 +88,9 @@ const object3 = {
 };
 object3.method();
 */
+
+const date = new Date();
+console.log(date);
 
 export const products = [
   {
