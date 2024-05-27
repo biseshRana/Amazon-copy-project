@@ -121,6 +121,10 @@ export function loadProducts(fun)
       if (productDetails.type === 'clothing') {
         return new Clothing(productDetails);
       }
+      else if (productDetails.type === 'appliance')
+        {
+          return new Appliance(productDetails);
+        }// this doesn't work cause data imported from backend. You can't attach the warrantyLink tag onto products.
       return new Product(productDetails);
     });
 
