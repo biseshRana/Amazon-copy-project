@@ -112,6 +112,37 @@ object3.method();
 
 export let products = [];
 
+export function loadProductsFetch()//1) purpose is to get products and turn them to objects
+{//18-1) fetch will get data from backend and then only will it go to the next step through then.
+  const promise = fetch('https://supersimplebackend.dev/products').then((response) => 
+    {
+      return response.json(); //response returns info about the response (time, type, etc.), response.json allows us to see the contents of the response. However it is an async function so it needs to be waited on. To fix this we can return it, which causes fetch to wait for it for some reason. 
+    }).then((productsData) => //2) will return response.json or data of response which is an array of objects (all the products available)
+      {
+        //3)converts products to objects
+        products = productsData.map((productDetails) => {
+          if (productDetails.type === 'clothing') {
+            return new Clothing(productDetails);
+          }
+          else if (productDetails.type === 'appliance')
+            {
+              return new Appliance(productDetails);
+            }// this doesn't work cause data imported from backend. You can't attach the warrantyLink tag onto products.
+          return new Product(productDetails);
+        });
+    
+        console.log('load products');
+      });
+
+      return promise;
+}
+
+/* just practice
+loadProductsFetch().then(() => 
+  {
+    console.log('next step');
+  });
+*/
 export function loadProducts(fun) 
 {
   const xhr = new XMLHttpRequest();

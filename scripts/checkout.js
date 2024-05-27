@@ -1,18 +1,13 @@
 import { renderOrderSummary } from './checkout/orderSummary.js';
 import { renderPaymentSummary } from './checkout/paymentSummary.js';
 import { renderCheckoutHeader } from '../zpractice.js';
-import { loadProducts } from '../data/products.js';
+import { loadProducts, loadProductsFetch } from '../data/products.js';
 import { loadCart } from '../data/cart.js';
 //import '../data/backend-practice.js';
 //import '../data/cart-class.js';
 
 Promise.all([
-    new Promise((resolve) => {
-        loadProducts(() => 
-            {
-                resolve('value1');
-            });
-    }),
+    loadProductsFetch(), //returns a promise allowing us to use it with promise.all
     new Promise((resolve) => 
         {
             loadCart(() => 
