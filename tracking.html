@@ -88,5 +88,10 @@
         </div>
       </div>
     </div>
+
+    <script>
+      const url = new URL(window.location.href);//new url breaks the URL address provided by window.location into several properites.
+      console.log(url.searchParams.get('orderId'));
+    </script>
   </body>
 </html>

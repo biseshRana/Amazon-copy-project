@@ -2,6 +2,7 @@ import { cart } from '../../data/cart.js';
 import { getProduct } from '../../data/products.js';
 import { getDeliveryOption } from '../../data/deliveryOptions.js';
 import formatCurrency from '../utils/money.js';
+import { addOrder } from '../../data/orders.js';
 
 export function renderPaymentSummary()//generates all data and HTML for right side of the section
 {
@@ -56,10 +57,29 @@ export function renderPaymentSummary()//generates all data and HTML for right si
             <div class="payment-summary-money">$${formatCurrency(totalCents/100)}</div>
             </div>
 
-            <button class="place-order-button button-primary">
+            <button class="place-order-button button-primary js-place-order">
             Place your order
             </button>
         `;
 
         document.querySelector('.payment-summary').innerHTML = paymentSummaryHTML;
+ 
+        document.querySelector('.js-place-order')
+        .addEventListener('click', async () => //do this so we can use await
+            {
+             const response = await fetch('https://supersimplebackend.dev/orders', {//since fetch returns a promise we can use await on it.
+                method: 'Post', 
+                headers: {//type of data you're sending. This one is JSON
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify({//we can't send JS directly so we turn it into JSON
+                    cart: cart //right side is our cart array. Left is name of object required by the backend for this order
+                })
+             });
+             
+             const order = await response.json(); //use await on this response.json is also a promise
+             addOrder(order);
+            });
+
+            window.location.href = 'orders.html'; //replaces everything past the slash in the searh bar with orders.html, opening the orders.html filepath. window.location.href itself just gets the url address
 }
