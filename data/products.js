@@ -110,8 +110,8 @@ object3.method();
 //const date = new Date();
 //console.log(date);
 
-export let products = [];
 
+export let products = [];
 export function loadProductsFetch()//1) purpose is to get products and turn them to objects
 {//18-1) fetch will get data from backend and then only will it go to the next step through then.
   const promise = fetch('https://supersimplebackend.dev/products').then((response) => 
@@ -137,16 +137,18 @@ export function loadProductsFetch()//1) purpose is to get products and turn them
       return promise;
 }
 
+
 /* just practice
 loadProductsFetch().then(() => 
   {
     console.log('next step');
   });
 */
-export function loadProducts(fun) 
+
+export function loadProducts(fun) //loads all products from database
 {
   const xhr = new XMLHttpRequest();
-
+  //.response is the backend's product database. productDetails represents on product as map cycles thru the entire data base. 
   xhr.addEventListener('load', () => {
     products = JSON.parse(xhr.response).map((productDetails) => {
       if (productDetails.type === 'clothing') {
@@ -164,8 +166,9 @@ export function loadProducts(fun)
   });
 
     xhr.open('Get', 'https://supersimplebackend.dev/products');
-    xhr.send();
+    xhr.send();//both of these send backend a request for products data
 }
+
 
 /*
 export const products = [{
