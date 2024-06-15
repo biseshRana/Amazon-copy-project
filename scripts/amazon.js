@@ -1,5 +1,6 @@
 import {cart, addToCart  } from '../data/cart.js';
-import {products, loadProducts} from '../data/products.js'  
+import {products, loadProducts} from '../data/products.js';
+
 
 
 loadProducts(renderProductsGrid);
@@ -8,7 +9,29 @@ loadProducts(renderProductsGrid);
 function renderProductsGrid()
 {
     let productsHTML = '';
-    products.forEach((product) => 
+    const url = new URL(window.location.href);
+  const search = url.searchParams.get('search');
+
+  let filteredProducts = products;
+
+  // If a search exists in the URL parameters,
+  // filter the products that match the search.
+  if (search) {
+    filteredProducts = products.filter((product) => {
+        let matchingKeyword = false;
+
+        product.keywords.forEach((keyword) => {
+          if (keyword.toLowerCase().includes(search.toLowerCase())) {
+            matchingKeyword = true;
+          }
+        });
+  
+        return matchingKeyword ||
+          product.name.toLowerCase().includes(search.toLowerCase());
+    });
+  }
+
+  filteredProducts.forEach((product) => 
     {
         productsHTML += //13) HTML generation: this HTML creates one item on the amazon webpage. Product is the array that is being looped through for each object (has all item info) info to put into their respective place within this HTML. All the HTML is being stacked on productsHTML which will represent all the items on the webpage
         `     
@@ -35,7 +58,7 @@ function renderProductsGrid()
             </div>
 
             <div class="product-quantity-container">
-            <select>
+            <select class="js-quantity-selector-${product.id}">
                 <option selected value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -92,6 +115,12 @@ function renderProductsGrid()
             
     //you cant just pull the object info by clicking on the items button. This is because there is no way to distinguish a button from item1 from item2. IOW, we can't link the buttons to an object. However, as we are looping thru the buttons, say we are on item 2 button. Still no link between button and item2 object info. However through the data attribute, we can link a product ID with the button and retrieve the product ID which we can push to the cart array. 
         });
+    });
+
+    document.querySelector('.js-search-button')
+    .addEventListener('click', () => {
+      const search = document.querySelector('.js-search-bar').value;
+      window.location.href = `amazon.html?search=${search}`;
     });
     //once again just using querySelectorAll isnt enough to target all the buttons with addEventListeners. YOu have to use a for loop. 
 }

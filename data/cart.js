@@ -32,12 +32,18 @@ export function addToCart(productId) {
     }
   });
 
+  const quantitySelector = document.querySelector(
+    `.js-quantity-selector-${productId}`
+  );
+
+  const quantity = Number(quantitySelector.value);
+
   if (matchingItem) {
-    matchingItem.quantity += 1;
+    matchingItem.quantity += quantity;
   } else {
     cart.push({
       productId: productId,
-      quantity: 1,
+      quantity: quantity,
       deliveryOptionId: '1'//15-3)this is the default deliveryOption for all products added to cart
     });
   }

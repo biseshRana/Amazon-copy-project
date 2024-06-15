@@ -63,7 +63,8 @@ export function renderPaymentSummary()//generates all data and HTML for right si
         `;
 
         document.querySelector('.payment-summary').innerHTML = paymentSummaryHTML;
- 
+        
+        /*this will bring up the entire order page. Currently does not fully work (issue is in exercise 18l and 18m seemingly)
         document.querySelector('.js-place-order')
         .addEventListener('click', async () => //do this so we can use await
             {
@@ -81,5 +82,5 @@ export function renderPaymentSummary()//generates all data and HTML for right si
              addOrder(order);
             });
 
-            window.location.href = 'orders.html'; //replaces everything past the slash in the searh bar with orders.html, opening the orders.html filepath. window.location.href itself just gets the url address
+            window.location.href = 'orders.html'; //replaces everything past the slash in the searh bar with orders.html, opening the orders.html filepath. window.location.href itself just gets the url address*/
 }
